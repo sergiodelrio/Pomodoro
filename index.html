@@ -105,19 +105,29 @@ button {
         document.title = `${timeString} - Pomodoro Timer`;
 
         if (currentTime > 0) {
-            currentTime--;
-            setTimeout(updateTimer, 1000);
-        } else {
-            if (isWorkTime) {
-                endOfWorkAudio.play();
-            } else {
-                endOfPauseAudio.play();
-            }
-            isWorkTime = !isWorkTime;
-            currentTime = isWorkTime ? workTime : breakTime;
-            completedCycles++;
-            cyclesElement.textContent = completedCycles;
-            setTimeout(updateTimer, 1000);
+    currentTime--;
+    setTimeout(updateTimer, 1000);
+} else {
+    // Play audio and switch modes
+    if (isWorkTime) {
+        endOfWorkAudio.play();
+    } else {
+        endOfPauseAudio.play();
+    }
+    
+    isWorkTime = !isWorkTime;
+    currentTime = isWorkTime ? workTime : breakTime;
+
+    // Update the status text
+    statusElement.textContent = isWorkTime ? "Work Time" : "Break Time";
+    
+    completedCycles++;
+    cyclesElement.textContent = completedCycles;
+    
+    // Restart the timer
+    updateTimer();
+}
+
         }
     }
 }
