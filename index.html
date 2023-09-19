@@ -72,6 +72,7 @@ button {
         <button id="startButton"><i class="fas fa-play"></i> Iniciar</button>
         <button id="stopButton"><i class="fas fa-pause"></i> Parar</button>
 
+
     </div>
 
     <!-- Audio Elements -->
@@ -93,6 +94,10 @@ button {
         const cyclesElement = document.getElementById("cycles");
         const startButton = document.getElementById("startButton");
         const stopButton = document.getElementById("stopButton");
+
+        startButton.addEventListener("click", startTimer);
+        stopButton.addEventListener("click", stopTimer);
+
 
         // Audio Elements
         const startAudio = document.getElementById("startAudio");
