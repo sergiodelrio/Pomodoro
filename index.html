@@ -82,7 +82,6 @@ button {
     <audio id="endOfPauseAudio" src="end_of_pause_cycle.mp3"></audio>
 
     <script>
-    
     let workTime = 25 * 60;
     let breakTime = 5 * 60;
     let currentTime = workTime;
@@ -138,19 +137,22 @@ button {
     }
 
     function startTimer() {
-        if (!isRunning) {
-            startAudio.play();
-            isRunning = true;
-            statusElement.textContent = isWorkTime ? "Work Time" : "Break Time";
-            updateTimer();
-        }
+    console.log("Start Button clicked");  // Add this line
+    if (!isRunning) {
+        startAudio.play();
+        isRunning = true;
+        statusElement.textContent = isWorkTime ? "Work Time" : "Break Time";
+        updateTimer();
     }
+}
 
-    function stopTimer() {
-        pauseAudio.play();
-        isRunning = false;
-        statusElement.textContent = "Stopped";
-    }
+function stopTimer() {
+    console.log("Stop Button clicked");  // Add this line
+    pauseAudio.play();
+    isRunning = false;
+    statusElement.textContent = "Stopped";
+}
+
 
     startButton.addEventListener("click", startTimer);
     stopButton.addEventListener("click", stopTimer);
