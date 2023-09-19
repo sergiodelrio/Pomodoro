@@ -82,83 +82,79 @@ button {
     <audio id="endOfPauseAudio" src="end_of_pause_cycle.mp3"></audio>
 
     <script>
-        let workTime = 25 * 60;
-        let breakTime = 5 * 60;
-        let currentTime = workTime;
-        let isWorkTime = true;
-        let isRunning = false;
-        let completedCycles = 0;
-        
-        const timerElement = document.getElementById("timer");
-        const statusElement = document.getElementById("status");
-        const cyclesElement = document.getElementById("cycles");
-        const startButton = document.getElementById("startButton");
-        const stopButton = document.getElementById("stopButton");
-
-        startButton.addEventListener("click", startTimer);
-        stopButton.addEventListener("click", stopTimer);
-
-
-        // Audio Elements
-        const startAudio = document.getElementById("startAudio");
-        const pauseAudio = document.getElementById("pauseAudio");
-        const endOfWorkAudio = document.getElementById("endOfWorkAudio");
-        const endOfPauseAudio = document.getElementById("endOfPauseAudio");
-
-        function updateTimer() {
-    if (isRunning) {
-        const mins = Math.floor(currentTime / 60);
-        const secs = currentTime % 60;
-        const timeString = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-        timerElement.textContent = timeString;
-
-        // Update the browser tab title
-        document.title = `${timeString} - Pomodoro Timer`;
-
-        if (currentTime > 0) {
-    currentTime--;
-    setTimeout(updateTimer, 1000);
-} else {
-    // Play audio and switch modes
-    if (isWorkTime) {
-        endOfWorkAudio.play();
-    } else {
-        endOfPauseAudio.play();
-    }
+       <script>
+    let workTime = 25 * 60;
+    let breakTime = 5 * 60;
+    let currentTime = workTime;
+    let isWorkTime = true;
+    let isRunning = false;
+    let completedCycles = 0;
     
-    isWorkTime = !isWorkTime;
-    currentTime = isWorkTime ? workTime : breakTime;
+    const timerElement = document.getElementById("timer");
+    const statusElement = document.getElementById("status");
+    const cyclesElement = document.getElementById("cycles");
+    const startButton = document.getElementById("startButton");
+    const stopButton = document.getElementById("stopButton");
 
-    // Update the status text
-    statusElement.textContent = isWorkTime ? "Work Time" : "Break Time";
-    
-    completedCycles++;
-    cyclesElement.textContent = completedCycles;
-    
-    // Restart the timer
-    updateTimer(); 
+    // Audio Elements
+    const startAudio = document.getElementById("startAudio");
+    const pauseAudio = document.getElementById("pauseAudio");
+    const endOfWorkAudio = document.getElementById("endOfWorkAudio");
+    const endOfPauseAudio = document.getElementById("endOfPauseAudio");
 
-        }
-    }
+    function updateTimer() {
+        if (isRunning) {
+            const mins = Math.floor(currentTime / 60);
+            const secs = currentTime % 60;
+            const timeString = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+            timerElement.textContent = timeString;
 
+            // Update the browser tab title
+            document.title = `${timeString} - Pomodoro Timer`;
 
-        function startTimer() {
-            if (!isRunning) {
-                startAudio.play();
-                isRunning = true;
+            if (currentTime > 0) {
+                currentTime--;
+                setTimeout(updateTimer, 1000);
+            } else {
+                if (isWorkTime) {
+                    endOfWorkAudio.play();
+                } else {
+                    endOfPauseAudio.play();
+                }
+                
+                isWorkTime = !isWorkTime;
+                currentTime = isWorkTime ? workTime : breakTime;
+
+                // Update the status text
                 statusElement.textContent = isWorkTime ? "Work Time" : "Break Time";
+                
+                completedCycles++;
+                cyclesElement.textContent = completedCycles;
+                
+                // Restart the timer
                 updateTimer();
             }
         }
+    }
 
-        function stopTimer() {
-            pauseAudio.play();
-            isRunning = false;
-            statusElement.textContent = "Stopped";
+    function startTimer() {
+        if (!isRunning) {
+            startAudio.play();
+            isRunning = true;
+            statusElement.textContent = isWorkTime ? "Work Time" : "Break Time";
+            updateTimer();
         }
+    }
 
-        startButton.addEventListener("click", startTimer);
-        stopButton.addEventListener("click", stopTimer);
-    </script>
+    function stopTimer() {
+        pauseAudio.play();
+        isRunning = false;
+        statusElement.textContent = "Stopped";
+    }
+
+    startButton.addEventListener("click", startTimer);
+    stopButton.addEventListener("click", stopTimer);
+</script>
+
 </body>
 </html>
